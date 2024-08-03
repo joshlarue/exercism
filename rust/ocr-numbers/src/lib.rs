@@ -183,6 +183,8 @@ pub fn convert(input: &str) -> Result<String, Error> {
     let input_vec = input.chars().collect::<Vec<char>>();
     println!("{:?}", input_vec);
 
+    verify_rows_and_cols(input)?;
+
     // TODO: iterate over str type; after every 3 chars, a new row starts
     // TODO: add each char to the Number struct. if invalid, put a ?
     // TODO: Encode each Number
@@ -190,4 +192,25 @@ pub fn convert(input: &str) -> Result<String, Error> {
     //
 
     Ok("String".to_string())
+}
+
+pub fn verify_rows_and_cols(input: &str) -> Result<(), Error> {
+    let rows: Vec<&str> = input.lines().collect();
+
+    if rows.len() % 4 != 0 {
+        return Err(Error::InvalidRowCount(rows.len()));
+    }
+
+    let num_columns = rows[0].len();
+    if num_columns % 3 != 0 {
+        return Err(Error::InvalidColumnCount(num_columns));
+    }
+
+    for row in rows {
+        if row.len() != num_columns {
+            return Err(Error::InvalidColumnCount(row.len()));
+        }
+    }
+
+    Ok(())
 }
