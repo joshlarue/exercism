@@ -33,7 +33,6 @@ fn unrecognized_characters_return_question_mark() {
 }
 
 #[test]
-#[ignore]
 fn recognizes_0() {
     #[rustfmt::skip]
     let input = " _ \n".to_string() +
